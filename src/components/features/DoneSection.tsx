@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+import { useRouter } from "next/navigation";
 import ChecklistItem from "./CheckListItem";
 import Image from "next/image";
 
@@ -15,14 +17,16 @@ interface Props {
 }
 
 export default function DoneSection({ todos, onToggle }: Props) {
+  const router = useRouter();
+
   return (
     <div className="w-full h-full">
       <Image src="/images/done.svg" alt="done" width={101} height={36} />
-      <div className="flex flex-col">
+      <div className="flex w-full flex-col">
         {todos.length === 0 ? (
-          <div className="flex flex-col items-center text-slate-400 text-[16px] font-bold">
+          <div className="flex flex-col items-center w-full text-slate-400 text-[16px] font-bold">
             <Image
-            className="mt-[75px] mb-[39px]"
+              className="mt-[75px] mb-[39px]"
               src="/images/done_large.svg"
               alt="done_large"
               width={200}
@@ -34,7 +38,11 @@ export default function DoneSection({ todos, onToggle }: Props) {
         ) : (
           <ul className="flex flex-col mt-[15px] gap-[15px]">
             {todos.map((todo) => (
-              <li key={todo.id}>
+              <li
+                key={todo.id}
+                className="cursor-pointer"
+                onClick={() => router.push(`/items/${todo.id}`)}
+              >
                 <ChecklistItem
                   id={todo.id}
                   name={todo.name}

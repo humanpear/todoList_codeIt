@@ -31,8 +31,8 @@ export default function Page() {
         setTodo(data);
 
         setName(data.name);
-        setMemoText(data.memo);
-        setImageUrl(data.imageUrl);
+        setMemoText(data.memo ?? "");
+        setImageUrl(data.imageUrl ?? "");
       } catch (err) {
         console.error("할 일 불러오기 실패", err);
       } finally {
@@ -55,69 +55,71 @@ export default function Page() {
         isCompleted: todo.isCompleted,
       });
       router.push("/");
-    } catch (err) {
-      console.error("수정 실패", err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+        console.error("수정 실패", err.response?.status, err.response?.data);
+      }
     }
-  };
 
-  const handleDelete = async () => {
-    if (!confirm("정말 삭제할까요?")) return;
-    try {
-      await deleteTodo(todo.id);
-      router.push("/");
-    } catch (err) {
-      console.error("삭제 실패", err);
-    }
-  };
+    const handleDelete = async () => {
+      if (!confirm("정말 삭제할까요?")) return;
+      try {
+        await deleteTodo(todo.id);
+        router.push("/");
+      } catch (err) {
+        console.error("삭제 실패", err);
+      }
+    };
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-  const handleNameKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
-  if (e.key === "Enter") handleFinish();
-};
+    const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setName(e.target.value);
+    };
+    const handleNameKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+      if (e.key === "Enter") handleFinish();
+    };
 
-  return (
-    <>
-      <GNB GnbStyle={GNBStyle.LARGE}></GNB>
-      <div className="flex flex-col items-center pt-[24px] ml-[360px] w-[1200px] gap-[24px]">
-        <CheckListDetail
-          checkListDetailStyle={
-            todo.isCompleted
-              ? CheckListDetailStyle.ACTIVE
-              : CheckListDetailStyle.DEFAULT
-          }
-        >
-          <input
-            className="
+    return (
+      <>
+        <GNB GnbStyle={GNBStyle.LARGE}></GNB>
+        <div className="flex flex-col items-center pt-[24px] ml-[360px] w-[1200px] gap-[24px]">
+          <CheckListDetail
+            checkListDetailStyle={
+              todo.isCompleted
+                ? CheckListDetailStyle.ACTIVE
+                : CheckListDetailStyle.DEFAULT
+            }
+          >
+            <input
+              className="
               w-full max-w-[880px] h-[44px] 
               bg-transparent outline-none 
               font-bold text-[20px] text-slate-900 underline
             "
-            value={name}
-            onChange={handleNameChange}
-            onKeyDown={handleNameKeyDown}
-          />
-        </CheckListDetail>
-        <div className="flex items-center gap-[24px]">
-          <ImageUpload
-            initialUrl={imageUrl}
-            onUpload={(url) => setImageUrl(url)}
-          />
-          <MemoBox
-            value={memoText}
-            onChange={(m: string) => setMemoText(m)}
-          ></MemoBox>
-        </div>
-        <div className="flex w-[1200px] pl-[743px] gap-[16px]">
-          <div onClick={handleFinish}>
-            <Button buttonStyle={ButtonStyle.EDIT_DEFAULT_LARGE} />
+              value={name}
+              onChange={handleNameChange}
+              onKeyDown={handleNameKeyDown}
+            />
+          </CheckListDetail>
+          <div className="flex items-center gap-[24px]">
+            <ImageUpload
+              initialUrl={imageUrl}
+              onUpload={(url) => setImageUrl(url)}
+            />
+            <MemoBox
+              value={memoText}
+              onChange={(m: string) => setMemoText(m)}
+            ></MemoBox>
           </div>
-          <div onClick={handleDelete}>
-            <Button buttonStyle={ButtonStyle.DELETE_LARGE} />
+          <div className="flex w-[1200px] pl-[743px] gap-[16px]">
+            <div onClick={handleFinish}>
+              <Button buttonStyle={ButtonStyle.EDIT_DEFAULT_LARGE} />
+            </div>
+            <div onClick={handleDelete}>
+              <Button buttonStyle={ButtonStyle.DELETE_LARGE} />
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
-}
+      </>
+    );
+  };
+

@@ -26,23 +26,21 @@ export default function Home() {
     fetchData();
   }, []);
 
-  // 2) 완료/미완료 토글 처리
   const handleToggle = async (id: string) => {
     try {
       const target = todos.find((t) => t.id === id);
       if (!target) return;
-      // 새로운 스펙에 맞춰 isCompleted 필드 사용
+
       const updated = await updateTodo(id, {
         isCompleted: !target.isCompleted,
       });
-      // 전체 객체를 교체
+
       setTodos((prev) => prev.map((t) => (t.id === id ? updated : t)));
     } catch (err) {
       console.error("상태 변경 실패", err);
     }
   };
 
-  // 3) 새 할 일 추가 처리
   const handleAdd = async () => {
     if (!newName.trim()) return;
     try {
@@ -55,7 +53,6 @@ export default function Home() {
     }
   };
 
-  // 엔터 키로도 추가
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleAdd();
   };
@@ -67,27 +64,30 @@ export default function Home() {
   return (
     <>
       <GNB GnbStyle={GNBStyle.LARGE}></GNB>
-      <div className="flex pt-[24px] pl-[360px] pb-[30px] w-full gap-[16px]">
-        <Search
-          value={newName}
-          placeholder="할 일을 입력해주세요"
-          onChange={(e) => setNewName(e.target.value)}
-          onKeyDown={onKeyDown}
-        ></Search>
-        <Button
-          buttonStyle={ButtonStyle.ADD_DEFAULT_LARGE}
-          onClick={handleAdd}
-        ></Button>
-      </div>
-      <div className="flex pl-[360px] justify-between">
-        <ToDoSection
-          todos={todos.filter((t) => !t.isCompleted)}
-          onToggle={handleToggle}
-        ></ToDoSection>
-        <DoneSection
-          todos={todos.filter((t) => t.isCompleted)}
-          onToggle={handleToggle}
-        ></DoneSection>
+      <div className="flex flex-col w-[1550px]">
+        <div className="flex pt-[24px] pl-[360px] pb-[30px] w-full gap-[16px]">
+          <Search
+            value={newName}
+            placeholder="할 일을 입력해주세요"
+            onChange={(e) => setNewName(e.target.value)}
+            onKeyDown={onKeyDown}
+          ></Search>
+          <Button
+            buttonStyle={ButtonStyle.ADD_DEFAULT_LARGE}
+            onClick={handleAdd}
+          ></Button>
+        </div>
+        <div className="flex w-full pl-[360px]">
+          <ToDoSection
+            todos={todos.filter((t) => !t.isCompleted)}
+            onToggle={handleToggle}
+          />
+
+          <DoneSection
+            todos={todos.filter((t) => t.isCompleted)}
+            onToggle={handleToggle}
+          />
+        </div>
       </div>
     </>
   );

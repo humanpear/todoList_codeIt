@@ -25,7 +25,7 @@ export default function MemoBox({ value, onChange }: Props) {
         Memo
       </div>
       <textarea
-        className="font-normal text-[16px] text-slate-800 z-10"
+        className="font-normal text-center w-full px-[20px] text-[16px] text-slate-800 bg-transparent resize-none outline-none z-10"
         placeholder="메모를 입력해주세요"
         value={value}
         onChange={handleChange}
