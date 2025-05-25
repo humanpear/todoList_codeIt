@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent, KeyboardEventHandler } from "react";
 import GNB, { GNBStyle } from "@/components/ui/GNB";
 import MemoBox from "@/components/features/MemoBox";
 import ImageUpload from "@/components/features/ImageUpload";
@@ -12,12 +12,13 @@ import Button, { ButtonStyle } from "@/components/ui/Button";
 import { getTodoById, updateTodo, deleteTodo, Todo } from "@/apis/todo";
 
 export default function Page() {
-  const { itemId } = useParams();
+  const params = useParams();
+  const rawId = params.itemId;
+  const itemId = Array.isArray(rawId) ? rawId[0] : rawId;
   const router = useRouter();
 
   const [todo, setTodo] = useState<Todo | null>(null);
   const [loading, setLoading] = useState(true);
-
   const [name, setName] = useState("");
   const [memoText, setMemoText] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -69,6 +70,13 @@ export default function Page() {
     }
   };
 
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+  const handleNameKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+  if (e.key === "Enter") handleFinish();
+};
+
   return (
     <>
       <GNB GnbStyle={GNBStyle.LARGE}></GNB>
@@ -80,16 +88,26 @@ export default function Page() {
               : CheckListDetailStyle.DEFAULT
           }
         >
-          {todo.name}
+          <input
+            className="
+              w-full max-w-[880px] h-[44px] 
+              bg-transparent outline-none 
+              font-bold text-[20px] text-slate-900 underline
+            "
+            value={name}
+            onChange={handleNameChange}
+            onKeyDown={handleNameKeyDown}
+          />
         </CheckListDetail>
         <div className="flex items-center gap-[24px]">
           <ImageUpload
             initialUrl={imageUrl}
             onUpload={(url) => setImageUrl(url)}
           />
-          <MemoBox onChange={(m) => setMemoText(m)}>
-            {memoText}
-          </MemoBox>
+          <MemoBox
+            value={memoText}
+            onChange={(m: string) => setMemoText(m)}
+          ></MemoBox>
         </div>
         <div className="flex w-[1200px] pl-[743px] gap-[16px]">
           <div onClick={handleFinish}>
