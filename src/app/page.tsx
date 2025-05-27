@@ -44,8 +44,9 @@ export default function Home() {
   const handleAdd = async () => {
     if (!newName.trim()) return;
     try {
-      // createTodo({ name, imageUrl? }) 시그니처에 맞춰서 객체 전달
-      const created = await createTodo({ name: newName.trim() });
+      const created = await createTodo({
+        name: newName.trim(),
+      });
       setTodos((prev) => [created, ...prev]);
       setNewName("");
     } catch (err) {
@@ -63,21 +64,38 @@ export default function Home() {
 
   return (
     <>
-      <GNB GnbStyle={GNBStyle.LARGE}></GNB>
+      <div className="hidden lg:block">
+        <GNB GnbStyle={GNBStyle.LARGE} />
+      </div>
+      <div className="hidden md:block lg:hidden">
+        <GNB GnbStyle={GNBStyle.MEDIUM} />
+      </div>
+      <div className="md:hidden">
+        <GNB GnbStyle={GNBStyle.SMALL} />
+      </div>
+
       <div className="flex flex-col w-[1550px]">
-        <div className="flex pt-[24px] pl-[360px] pb-[30px] w-full gap-[16px]">
+        <div className="flex pt-[24px] pl-[24px] lg:pl-[360px] pb-[30px] w-full gap-[16px]">
           <Search
             value={newName}
             placeholder="할 일을 입력해주세요"
             onChange={(e) => setNewName(e.target.value)}
             onKeyDown={onKeyDown}
           ></Search>
-          <Button
-            buttonStyle={ButtonStyle.ADD_DEFAULT_LARGE}
-            onClick={handleAdd}
-          ></Button>
+          <div className="hidden md:block">
+            <Button
+              buttonStyle={ButtonStyle.ADD_DEFAULT_LARGE}
+              onClick={handleAdd}
+            ></Button>
+          </div>
+          <div className="md:hidden">
+            <Button
+              buttonStyle={ButtonStyle.ADD_DEFAULT_SMALL}
+              onClick={handleAdd}
+            ></Button>
+          </div>
         </div>
-        <div className="flex w-full pl-[360px]">
+        <div className="flex flex-col lg:flex-row sm:w-[375px] md:w-[744px] w-lg:w-full lg:gap-[235px] gap-[24px] pl-[24px] lg:pl-[360px] pb-[30px]">
           <ToDoSection
             todos={todos.filter((t) => !t.isCompleted)}
             onToggle={handleToggle}

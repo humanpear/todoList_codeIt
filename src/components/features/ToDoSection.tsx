@@ -22,15 +22,22 @@ export default function ToDoSection({ todos, onToggle }: Props) {
   return (
     <div className="w-full h-full">
       <Image src="/images/todo.svg" alt="todo" width={101} height={36} />
-      <div className="flex w-full flex-col">
+      <div className="flex sm:w-[375px] md:w-[744px] w-lg:w-full flex-col">
         {todos.length === 0 ? (
-          <div className="flex flex-col items-center w-full text-slate-400 text-[16px] font-bold">
+          <div className="flex flex-col max-w-[588px] items-center text-slate-400 text-[16px] font-bold">
             <Image
-              className="mt-[75px] mb-[24px]"
+              className="hidden md:block mt-[8px] lg:mt-[75px] mb-[24px]"
               src="/images/todo_large.svg"
               alt="todo_large"
               width={200}
               height={200}
+            />
+            <Image
+              className="md:hidden mt-[8px] mb-[24px]"
+              src="/images/todo_small.svg"
+              alt="todo_small"
+              width={120}
+              height={120}
             />
             <p>할 일이 없어요.</p>
             <p>TODO를 새롭게 추가해주세요!</p>

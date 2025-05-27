@@ -14,7 +14,7 @@ export default function MemoBox({ value, onChange }: Props) {
   };
 
   return (
-    <div className="relative flex overflow-hidden items-center justify-center w-[588px] h-[311px] rounded-[24px]">
+    <div className="relative flex overflow-hidden items-center justify-center w-[343px] md:w-[696px] lg:w-[588px] h-[311px] rounded-[24px]">
       <Image
         src="/images/memo.svg"
         alt="memo"
@@ -25,7 +25,7 @@ export default function MemoBox({ value, onChange }: Props) {
         Memo
       </div>
       <textarea
-        className="font-normal text-center w-full px-[20px] text-[16px] text-slate-800 bg-transparent resize-none outline-none z-10"
+        className="font-normal text-center align-middle w-full h-[230px] px-[20px] mt-[40px] text-[16px] text-slate-800 leading-none bg-transparent resize-none outline-none z-10"
         placeholder="메모를 입력해주세요"
         value={value}
         onChange={handleChange}

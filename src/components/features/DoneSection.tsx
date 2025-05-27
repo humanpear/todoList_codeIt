@@ -22,15 +22,22 @@ export default function DoneSection({ todos, onToggle }: Props) {
   return (
     <div className="w-full h-full">
       <Image src="/images/done.svg" alt="done" width={101} height={36} />
-      <div className="flex w-full flex-col">
+      <div className="flex sm:w-[375px] md:w-[744px] w-lg:w-full flex-col">
         {todos.length === 0 ? (
-          <div className="flex flex-col items-center w-full text-slate-400 text-[16px] font-bold">
+          <div className="flex flex-col max-w-[588px] items-center  text-slate-400 text-[16px] font-bold">
             <Image
-              className="mt-[75px] mb-[39px]"
+              className="hidden md:block mt-[8px] lg:mt-[75px] mb-[24px]"
               src="/images/done_large.svg"
               alt="done_large"
               width={200}
               height={200}
+            />
+            <Image
+              className="md:hidden mt-[8px] mb-[24px]"
+              src="/images/done_small.svg"
+              alt="done_small"
+              width={120}
+              height={120}
             />
             <p>아직 다 한 일이 없어요.</p>
             <p>해야 할 일을 체크해보세요!</p>

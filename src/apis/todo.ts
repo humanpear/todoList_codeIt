@@ -1,4 +1,3 @@
-
 import axios from './axiosInstance';
 
 export interface Todo {
@@ -10,9 +9,8 @@ export interface Todo {
   isCompleted: boolean;
 }
 
-
 export type CreateTodoDto = {
-  name: string;          
+  name: string;
 };
 
 export type UpdateTodoDto = Partial<{
