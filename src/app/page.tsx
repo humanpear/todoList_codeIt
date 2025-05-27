@@ -74,7 +74,7 @@ export default function Home() {
         <GNB GnbStyle={GNBStyle.SMALL} />
       </div>
 
-      <div className="flex flex-col w-[1550px]">
+      <div className="flex flex-col">
         <div className="flex pt-[24px] pl-[24px] xl:pl-[360px] pb-[30px] w-full gap-[16px]">
           <Search
             value={newName}

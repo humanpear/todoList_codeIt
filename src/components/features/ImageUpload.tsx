@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import Image from "next/image";
 import Button, { ButtonStyle } from "@/components/ui/Button";
 import { uploadImage } from "@/apis/upload";
@@ -12,6 +12,12 @@ interface Props {
 
 export default function ImageUpload({ initialUrl, onUpload }: Props) {
   const [previewUrl, setPreviewUrl] = useState<string>(initialUrl || "");
+
+  useEffect(() => {
+    if (initialUrl) {
+      setPreviewUrl(initialUrl);
+    }
+  }, [initialUrl]);
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -34,10 +40,10 @@ export default function ImageUpload({ initialUrl, onUpload }: Props) {
 
     try {
       const uploadedUrl = await uploadImage(file);
+      setPreviewUrl(uploadedUrl);
       onUpload?.(uploadedUrl);
-    } catch (err) {
-      console.error("이미지 업로드 실패", err);
-      alert("이미지 업로드에 실패했습니다. 다시 시도해주세요.");
+    } catch {
+      /* … */
     }
   };
 
@@ -59,15 +65,20 @@ export default function ImageUpload({ initialUrl, onUpload }: Props) {
       />
 
       {previewUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={previewUrl}
-          alt="uploaded preview"
-          className="object-cover w-full h-full rounded-[24px]"
-        />
+        <>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={previewUrl}
+            alt="uploaded preview"
+            className="object-cover w-full h-full rounded-[24px]"
+          />
+          <div className="absolute right-[15px] bottom-[15px]">
+            <Button buttonStyle={ButtonStyle.PLUS} />
+          </div>
+        </>
       ) : (
         <>
-          <div className="absolute right-[15px] bottom-[15px] z-[0]">
+          <div className="absolute right-[15px] bottom-[15px]">
             <Button buttonStyle={ButtonStyle.PLUS} />
           </div>
           <Image src="/images/img.svg" alt="img" width={64} height={64} />

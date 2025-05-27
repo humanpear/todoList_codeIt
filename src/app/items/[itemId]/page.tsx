@@ -42,7 +42,8 @@ export default function Page() {
     fetch();
   }, [itemId]);
 
-  if (loading) return <p className="w-full justify-center pt-[24px]">로딩중...</p>;
+  if (loading)
+    return <p className="w-full justify-center pt-[24px]">로딩중...</p>;
   if (!todo)
     return <p className="pl-[360px] pt-[24px]">할 일을 찾을 수 없습니다.</p>;
 
@@ -124,7 +125,20 @@ export default function Page() {
         <div className="flex flex-col xl:flex-row items-center gap-[24px]">
           <ImageUpload
             initialUrl={imageUrl}
-            onUpload={(url) => setImageUrl(url)}
+            onUpload={async (url) => {
+              setImageUrl(url);
+
+              try {
+                await updateTodo(todo.id, {
+                  name,
+                  memo: memoText,
+                  imageUrl: url,
+                  isCompleted: todo.isCompleted,
+                });
+              } catch (e) {
+                console.error("이미지 URL 저장 실패", e);
+              }
+            }}
           />
           <MemoBox
             value={memoText}
