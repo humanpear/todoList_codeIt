@@ -59,15 +59,15 @@ export default function Home() {
   };
 
   if (loading) {
-    return <p className="pl-[360px] pt-[24px]">로딩중...</p>;
+    return <p className="w-full justify-center pt-[24px]">로딩중...</p>;
   }
 
   return (
     <>
-      <div className="hidden lg:block">
+      <div className="hidden xl:block">
         <GNB GnbStyle={GNBStyle.LARGE} />
       </div>
-      <div className="hidden md:block lg:hidden">
+      <div className="hidden md:block xl:hidden">
         <GNB GnbStyle={GNBStyle.MEDIUM} />
       </div>
       <div className="md:hidden">
@@ -75,7 +75,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col w-[1550px]">
-        <div className="flex pt-[24px] pl-[24px] lg:pl-[360px] pb-[30px] w-full gap-[16px]">
+        <div className="flex pt-[24px] pl-[24px] xl:pl-[360px] pb-[30px] w-full gap-[16px]">
           <Search
             value={newName}
             placeholder="할 일을 입력해주세요"
@@ -95,7 +95,7 @@ export default function Home() {
             ></Button>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row sm:w-[375px] md:w-[744px] w-lg:w-full lg:gap-[235px] gap-[24px] pl-[24px] lg:pl-[360px] pb-[30px]">
+        <div className="flex flex-col xl:flex-row sm:w-[375px] md:w-[744px] w-xl:w-full xl:gap-[235px] gap-[24px] pl-[24px] xl:pl-[360px] pb-[30px]">
           <ToDoSection
             todos={todos.filter((t) => !t.isCompleted)}
             onToggle={handleToggle}

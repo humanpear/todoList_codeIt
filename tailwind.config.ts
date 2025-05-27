@@ -15,7 +15,6 @@ export default {
     },
   },
   screens: {
-      // 모바일 우선 → md 이상부터 태블릿, lg 이상부터 데스크탑
       sm: "640px",
       md: "768px",
       lg: "1024px"

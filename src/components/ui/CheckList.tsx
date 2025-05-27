@@ -28,7 +28,7 @@ export default function CheckList({
     switch (checkListStyle) {
       case CheckListStyle.DEFAULT:
         return (
-          <div className="flex items-center gap-[16px] lg:w-[588px] md:w-[696px] w-[344px] h-[50px] pl-[10px] rounded-[27px] border-[2px] border-slate-900 bg-whited">
+          <div className="flex items-center gap-[16px] xl:w-[588px] md:w-[696px] w-[344px] h-[50px] pl-[10px] rounded-[27px] border-[2px] border-slate-900 bg-whited">
             <div className="cursor-pointer" onClick={handleCheckboxClick}>
               <Image
                 src="/icons/checkbox_default.svg"
@@ -44,7 +44,7 @@ export default function CheckList({
         );
       case CheckListStyle.ACTIVE:
         return (
-          <div className="flex items-center gap-[16px] lg:w-[588px] md:w-[696px] w-[344px] h-[50px] pl-[10px] rounded-[27px] border-[2px] border-slate-900 bg-violet-100">
+          <div className="flex items-center gap-[16px] xl:w-[588px] md:w-[696px] w-[344px] h-[50px] pl-[10px] rounded-[27px] border-[2px] border-slate-900 bg-violet-100">
             <div className="cursor-pointer" onClick={handleCheckboxClick}>
               <Image
                 src="/icons/checkbox_active.svg"

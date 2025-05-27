@@ -22,11 +22,11 @@ export default function DoneSection({ todos, onToggle }: Props) {
   return (
     <div className="w-full h-full">
       <Image src="/images/done.svg" alt="done" width={101} height={36} />
-      <div className="flex sm:w-[375px] md:w-[744px] w-lg:w-full flex-col">
+      <div className="flex sm:w-[375px] md:w-[744px] w-xl:w-full flex-col">
         {todos.length === 0 ? (
           <div className="flex flex-col max-w-[588px] items-center  text-slate-400 text-[16px] font-bold">
             <Image
-              className="hidden md:block mt-[8px] lg:mt-[75px] mb-[24px]"
+              className="hidden md:block mt-[8px] xl:mt-[75px] mb-[24px]"
               src="/images/done_large.svg"
               alt="done_large"
               width={200}

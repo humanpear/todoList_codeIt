@@ -42,7 +42,7 @@ export default function Page() {
     fetch();
   }, [itemId]);
 
-  if (loading) return <p className="pl-[360px] pt-[24px]">로딩중...</p>;
+  if (loading) return <p className="w-full justify-center pt-[24px]">로딩중...</p>;
   if (!todo)
     return <p className="pl-[360px] pt-[24px]">할 일을 찾을 수 없습니다.</p>;
 
@@ -78,19 +78,37 @@ export default function Page() {
     if (e.key === "Enter") handleFinish();
   };
 
+  const handleToggle = async () => {
+    if (!todo) return;
+    try {
+      const updated = await updateTodo(todo.id, {
+        name,
+        memo: memoText,
+        imageUrl,
+        isCompleted: !todo.isCompleted,
+      });
+      setTodo(updated);
+      setName(updated.name);
+      setMemoText(updated.memo ?? "");
+      setImageUrl(updated.imageUrl ?? "");
+    } catch (err) {
+      console.error("상태 변경 실패", err);
+    }
+  };
+
   return (
-    <>
-      <div className="hidden lg:block">
+    <div className="xl:w-[1920px]">
+      <div className="hidden xl:block">
         <GNB GnbStyle={GNBStyle.LARGE} />
       </div>
-      <div className="hidden md:block lg:hidden">
+      <div className="hidden md:block xl:hidden">
         <GNB GnbStyle={GNBStyle.MEDIUM} />
       </div>
       <div className="md:hidden">
         <GNB GnbStyle={GNBStyle.SMALL} />
       </div>
 
-      <div className="flex flex-col items-center pt-[24px] lg:ml-[360px] w-[375px] md:w-[744px] lg:w-full gap-[24px]">
+      <div className="flex flex-col items-center pt-[24px] w-[375px] md:w-[744px] xl:w-full gap-[24px]">
         <CheckListDetail
           value={name}
           onChange={handleNameChange}
@@ -100,10 +118,10 @@ export default function Page() {
               ? CheckListDetailStyle.ACTIVE
               : CheckListDetailStyle.DEFAULT
           }
-        >          
-        </CheckListDetail>
+          onToggle={handleToggle}
+        ></CheckListDetail>
 
-        <div className="flex flex-col lg:flex-row items-center gap-[24px]">
+        <div className="flex flex-col xl:flex-row items-center gap-[24px]">
           <ImageUpload
             initialUrl={imageUrl}
             onUpload={(url) => setImageUrl(url)}
@@ -113,15 +131,21 @@ export default function Page() {
             onChange={(m: string) => setMemoText(m)}
           ></MemoBox>
         </div>
-        <div className="flex w-auto lg:pl-[743px] gap-[16px]">
+        <div className="flex xl:pl-[630px] gap-[16px]">
           <div onClick={handleFinish}>
-            <Button buttonStyle={ButtonStyle.EDIT_DEFAULT_LARGE} />
+            <Button
+              buttonStyle={
+                todo.isCompleted
+                  ? ButtonStyle.EDIT_ACTIVE_LARGE
+                  : ButtonStyle.EDIT_DEFAULT_LARGE
+              }
+            />
           </div>
           <div onClick={handleDelete}>
             <Button buttonStyle={ButtonStyle.DELETE_LARGE} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -45,7 +45,7 @@ export default function ImageUpload({ initialUrl, onUpload }: Props) {
     <div
       className="
         relative flex items-center justify-center 
-        w-[343px] md:w-[696px] lg:w-[384px] h-[311px] rounded-[24px] 
+        w-[343px] md:w-[696px] xl:w-[384px] h-[311px] rounded-[24px] 
         border-2 border-slate-300 border-dashed 
         bg-slate-50
       "
